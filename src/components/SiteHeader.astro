@@ -1,0 +1,32 @@
+---
+import ThemeToggle from "@/components/ThemeToggle";
+import ScrollNav from "@/components/ScrollNav";
+import { site } from "@/lib/site";
+---
+
+<header
+  class="pointer-events-none fixed inset-x-0 top-0 z-[200] flex items-center justify-between px-5 py-5 md:px-12 md:py-6"
+  aria-label="Site navigation"
+>
+  <a href="#hero" class="nav-logo pointer-events-auto opacity-90 transition-opacity hover:opacity-100">
+    <img
+      class="brand-logo h-7 w-auto md:h-8"
+      src="/images/krsis-logo.png"
+      alt={site.name}
+      width="267"
+      height="150"
+    />
+  </a>
+  <div
+    class="nav-actions pointer-events-auto flex items-center gap-4 max-md:fixed max-md:bottom-6 max-md:right-5 max-md:top-auto max-md:left-auto"
+  >
+    <div class="max-md:fixed max-md:right-5 max-md:top-4 max-md:z-[110]">
+      <ThemeToggle client:load />
+    </div>
+    <div
+      class="max-md:fixed max-md:bottom-6 max-md:left-1/2 max-md:-translate-x-1/2 max-md:rounded-full max-md:border max-md:border-line max-md:bg-[var(--color-nav-pill-bg)] max-md:px-4 max-md:py-2.5 max-md:shadow-nav max-md:backdrop-blur-md"
+    >
+      <ScrollNav client:load />
+    </div>
+  </div>
+</header>

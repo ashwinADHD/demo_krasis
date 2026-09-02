@@ -1,0 +1,3 @@
+# Deploy to Cloudflare Pages: connect this repo and set
+# Build command: npm run build
+# Build output directory: dist

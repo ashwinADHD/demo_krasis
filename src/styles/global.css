@@ -1,0 +1,180 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root,
+  [data-theme="light"] {
+    --color-canvas: #f9fafb;
+    --color-surface: #ffffff;
+    --color-line: #e5e7eb;
+    --color-heading: #111827;
+    --color-body: #4b5563;
+    --color-accent: #b45309;
+    --color-accent-hover: #92400e;
+    --color-hero-glow: rgba(180, 83, 9, 0.05);
+    --color-btn-bg: #111827;
+    --color-btn-bg-hover: #b45309;
+    --color-btn-text: #ffffff;
+    --color-nav-pill-bg: rgba(255, 255, 255, 0.92);
+    --color-nav-shadow: rgba(17, 24, 39, 0.06);
+  }
+
+  [data-theme="dark"] {
+    --color-canvas: #0b0d13;
+    --color-surface: #131823;
+    --color-line: #1e2638;
+    --color-heading: #f8fafc;
+    --color-body: #94a3b8;
+    --color-accent: #f59e0b;
+    --color-accent-hover: #d97706;
+    --color-hero-glow: rgba(124, 58, 237, 0.14);
+    --color-btn-bg: linear-gradient(135deg, #7c3aed 0%, #c026d3 100%);
+    --color-btn-bg-hover: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
+    --color-btn-text: #ffffff;
+    --color-nav-pill-bg: rgba(19, 24, 35, 0.92);
+    --color-nav-shadow: rgba(0, 0, 0, 0.35);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    color-scheme: light;
+  }
+
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  body {
+    @apply m-0 overflow-hidden bg-canvas font-body text-body antialiased;
+  }
+
+  img {
+    @apply block h-auto max-w-full;
+  }
+}
+
+@layer components {
+  .brand-logo {
+    @apply aspect-[267/150] w-auto object-contain transition-[filter] duration-300;
+  }
+
+  [data-theme="dark"] .nav-logo .brand-logo {
+    filter: brightness(1.12) drop-shadow(0 0 10px rgba(165, 180, 252, 0.2));
+  }
+
+  [data-theme="dark"] .hero-logo.brand-logo {
+    filter: brightness(1.18) contrast(1.04) drop-shadow(0 0 28px rgba(124, 58, 237, 0.35))
+      drop-shadow(0 0 50px rgba(192, 38, 211, 0.15));
+  }
+
+  .scroll-track {
+    @apply flex h-screen w-screen snap-x snap-mandatory flex-row overflow-x-auto overflow-y-hidden bg-canvas;
+    scrollbar-width: none;
+  }
+
+  .scroll-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .panel {
+    @apply relative flex h-screen w-screen shrink-0 snap-start snap-always items-center justify-center overflow-hidden;
+  }
+
+  .panel + .panel {
+    @apply border-l border-line;
+  }
+
+  .panel-inner {
+    @apply relative z-[2] flex w-full max-w-[640px] flex-col items-center px-10 pb-10 pt-[calc(72px+24px)] text-center;
+  }
+
+  .panel-inner--left {
+    @apply max-w-[560px] items-start text-left;
+  }
+
+  .kicker {
+    @apply mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+  }
+
+  .accent-line {
+    @apply mb-6 h-[3px] w-12 rounded-sm bg-accent;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 text-[0.95rem] font-semibold text-[var(--color-btn-text)] transition-all duration-200;
+    background: var(--color-btn-bg);
+  }
+
+  .btn-primary:hover {
+    background: var(--color-btn-bg-hover);
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+  }
+
+  .stars {
+    @apply pointer-events-none absolute inset-0 z-0 hidden;
+  }
+
+  [data-theme="dark"] .stars {
+    @apply block;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255, 255, 255, 0.35) 50%, transparent 50%),
+      radial-gradient(1px 1px at 55% 15%, rgba(255, 255, 255, 0.25) 50%, transparent 50%),
+      radial-gradient(1px 1px at 85% 40%, rgba(255, 255, 255, 0.3) 50%, transparent 50%);
+  }
+
+  @media (max-width: 767px) {
+    body {
+      @apply overflow-auto;
+    }
+
+    .scroll-track {
+      @apply h-auto min-h-dvh w-full snap-y snap-mandatory flex-col overflow-x-hidden overflow-y-auto;
+    }
+
+    .panel {
+      @apply h-auto min-h-dvh w-full shrink;
+    }
+
+    .panel + .panel {
+      @apply border-l-0 border-t border-line;
+    }
+
+    .panel-inner {
+      @apply px-6 pb-20 pt-[calc(72px+16px)];
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-logo {
+      @apply w-[min(440px,42vw)];
+    }
+  }
+}
+
+@keyframes hint-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(6px);
+  }
+}
+
+@media (max-width: 767px) {
+  @keyframes hint-pulse {
+    0%,
+    100% {
+      opacity: 0.4;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 1;
+      transform: translateY(6px);
+    }
+  }
+}

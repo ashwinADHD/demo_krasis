@@ -1,0 +1,87 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import SiteHeader from "@/components/SiteHeader.astro";
+import ExploreButton from "@/components/ExploreButton";
+import ContactForm from "@/components/ContactForm";
+import { site } from "@/lib/site";
+---
+
+<BaseLayout>
+  <a
+    href="#hero"
+    class="absolute left-[-999px] top-0 z-[200] focus:left-4 focus:top-4 focus:rounded-md focus:bg-accent focus:px-3.5 focus:py-2 focus:text-white"
+  >
+    Skip to content
+  </a>
+
+  <SiteHeader />
+
+  <main id="scroll-track" class="scroll-track" tabindex="-1">
+    <!-- Hero -->
+    <section class="panel panel-hero bg-[radial-gradient(ellipse_80%_60%_at_50%_40%,var(--color-hero-glow)_0%,transparent_60%),var(--color-canvas)]" id="hero" data-section="hero">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="panel-inner max-w-[720px]">
+        <img
+          class="hero-logo brand-logo mb-7 w-[min(400px,85vw)]"
+          src="/images/krsis-logo.png"
+          alt={site.name}
+          width="267"
+          height="150"
+        />
+        <p class="mb-8 text-base tracking-wide text-body md:text-lg">{site.tagline}</p>
+        <ExploreButton client:load />
+        <div
+          class="absolute bottom-8 flex animate-[hint-pulse_2.4s_ease-in-out_infinite] flex-col items-center gap-2 text-xs uppercase tracking-[0.14em] text-body max-md:bottom-8 md:fixed md:bottom-12 md:right-12 md:items-end"
+          aria-hidden="true"
+        >
+          <span>Scroll</span>
+          <span class="block h-5 w-5 rotate-[-45deg] border-b-2 border-r-2 border-accent max-md:rotate-45"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section class="panel" id="about" data-section="about">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="panel-inner panel-inner--left">
+        <p class="kicker">About</p>
+        <h2 class="mb-5 font-heading text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold leading-tight tracking-tight text-heading">
+          Building the future from the edge of possibility
+        </h2>
+        <div class="accent-line" aria-hidden="true"></div>
+        <p class="body-text mb-7 max-w-[48ch] text-[1.05rem]">
+          KRASIS is a forward-thinking studio at the intersection of design, technology, and
+          imagination. We craft experiences that feel as vast as the cosmos and as precise as
+          engineering — bold ideas brought to life with clarity and purpose.
+        </p>
+        <ul class="m-0 flex list-none flex-wrap gap-2.5 p-0">
+          <li class="rounded-full border border-line bg-surface px-[18px] py-2 text-sm tracking-wide text-body">Founded 2026</li>
+          <li class="rounded-full border border-line bg-surface px-[18px] py-2 text-sm tracking-wide text-body">Global</li>
+          <li class="rounded-full border border-line bg-surface px-[18px] py-2 text-sm tracking-wide text-body">Innovation-first</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="panel" id="contact" data-section="contact">
+      <div class="stars" aria-hidden="true"></div>
+      <div class="panel-inner panel-inner--left">
+        <p class="kicker">Contact</p>
+        <h2 class="mb-5 font-heading text-[clamp(1.8rem,3.5vw,2.8rem)] font-bold leading-tight tracking-tight text-heading">
+          Let's create something extraordinary
+        </h2>
+        <div class="accent-line" aria-hidden="true"></div>
+        <p class="body-text mb-7 max-w-[48ch] text-[1.05rem] text-body">
+          Tell us about your project. We'll get back to you within two business days.
+        </p>
+        <ContactForm client:load />
+        <div class="mb-8">
+          <a href={`mailto:${site.email}`} class="text-sm text-accent transition-colors hover:text-accent-hover">
+            {site.email}
+          </a>
+        </div>
+        <p class="m-0 text-sm text-body">&copy; 2026 {site.name}</p>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
