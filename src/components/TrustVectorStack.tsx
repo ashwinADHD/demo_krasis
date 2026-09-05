@@ -5,6 +5,8 @@ import { trustVectors } from "@/lib/content";
 export default function TrustVectorStack() {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
   const total = trustVectors.length;
 
   const handleNext = useCallback(() => {
@@ -14,6 +16,26 @@ export default function TrustVectorStack() {
   const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const diffY = touchStartY.current - e.changedTouches[0].clientY;
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   // Keyboard navigation when focused
   useEffect(() => {
@@ -35,6 +57,8 @@ export default function TrustVectorStack() {
     <div
       ref={containerRef}
       tabIndex={0}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className="mt-14 pt-10 border-t border-line/60 mx-auto max-w-3xl focus:outline-none"
       aria-label="Trust Architecture Guarantees Stack"
     >
@@ -74,7 +98,7 @@ export default function TrustVectorStack() {
             <div
               key={item.title}
               onClick={() => !isFront && setActiveIndex(idx)}
-              className={`rounded-3xl border border-line bg-surface/95 p-7 sm:p-9 text-center backdrop-blur-xl shadow-2xl transition-all duration-500 ease-out ${
+              className={`rounded-3xl border border-line bg-surface/95 p-5 sm:p-8 md:p-9 text-center backdrop-blur-xl shadow-2xl transition-all duration-500 ease-out ${
                 isFront
                   ? "relative z-30 opacity-100 scale-100 translate-y-0 shadow-accent/5 border-accent/40"
                   : isSecond

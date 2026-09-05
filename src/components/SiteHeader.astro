@@ -70,17 +70,18 @@ import { site } from "@/lib/site";
   </div>
 
   <!-- Mobile Quick Nav Bar -->
-  <div
-    class="border-line/60 flex items-center justify-center gap-5 border-t px-4 py-2.5 text-xs font-semibold sm:text-sm md:hidden"
+  <nav
+    class="border-line/60 flex items-center justify-start sm:justify-center gap-3 overflow-x-auto no-scrollbar border-t px-4 py-2 text-xs font-semibold whitespace-nowrap md:hidden"
+    aria-label="Mobile Navigation"
   >
-    <a href="#top" class="text-body transition-colors hover:text-heading">Home</a>
-    <span class="text-line">•</span>
-    <a href="#about" class="text-body transition-colors hover:text-heading">About Us</a>
-    <span class="text-line">•</span>
-    <a href="#capabilities" class="text-body transition-colors hover:text-heading">Capabilities</a>
-    <span class="text-line">•</span>
-    <a href="#engagement" class="text-body transition-colors hover:text-heading">How We Work</a>
-    <span class="text-line">•</span>
-    <a href="#contact" class="text-body transition-colors hover:text-heading">Contact Us</a>
-  </div>
+    <a href="#top" class="text-body transition-colors hover:text-heading px-1.5 py-0.5">Home</a>
+    <span class="text-line opacity-50">•</span>
+    <a href="#about" class="text-body transition-colors hover:text-heading px-1.5 py-0.5">About Us</a>
+    <span class="text-line opacity-50">•</span>
+    <a href="#capabilities" class="text-body transition-colors hover:text-heading px-1.5 py-0.5">Capabilities</a>
+    <span class="text-line opacity-50">•</span>
+    <a href="#engagement" class="text-body transition-colors hover:text-heading px-1.5 py-0.5">How We Work</a>
+    <span class="text-line opacity-50">•</span>
+    <a href="#contact" class="text-body transition-colors hover:text-heading px-1.5 py-0.5">Contact Us</a>
+  </nav>
 </header>

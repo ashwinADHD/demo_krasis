@@ -11,6 +11,8 @@ const capabilityBadges: Record<number, string[]> = {
 export default function CapabilitySlideDeck() {
   const [activeIndex, setActiveIndex] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
 
   const total = capabilities.length;
   const currentCapability = capabilities[activeIndex];
@@ -23,6 +25,26 @@ export default function CapabilitySlideDeck() {
   const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const diffY = touchStartY.current - e.changedTouches[0].clientY;
+    if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 40) {
+      if (diffX > 0) {
+        handleNext();
+      } else {
+        handlePrev();
+      }
+    }
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
 
   // Keyboard navigation
   useEffect(() => {
@@ -44,6 +66,8 @@ export default function CapabilitySlideDeck() {
     <div
       ref={containerRef}
       tabIndex={0}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className="group relative mt-12 overflow-hidden rounded-3xl border border-line bg-surface/60 shadow-2xl backdrop-blur-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent/40"
       aria-label="Capabilities Interactive Presentation Deck"
     >
@@ -65,10 +89,37 @@ export default function CapabilitySlideDeck() {
         </div>
       </div>
 
+      {/* Mobile/Tablet Horizontal Tabs Strip (< lg) */}
+      <div className="lg:hidden border-b border-line bg-canvas/60 px-3.5 py-2.5">
+        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar" role="tablist" aria-orientation="horizontal">
+          {capabilities.map((item, idx) => {
+            const isActive = idx === activeIndex;
+            return (
+              <button
+                key={item.title}
+                role="tab"
+                aria-selected={isActive}
+                onClick={() => setActiveIndex(idx)}
+                className={`shrink-0 flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-semibold transition-all duration-200 ${
+                  isActive
+                    ? "bg-accent text-white shadow-sm"
+                    : "bg-surface border border-line text-body hover:text-heading"
+                }`}
+              >
+                <span className={`font-mono text-[11px] ${isActive ? "text-white/90" : "text-accent"}`}>
+                  0{idx + 1}
+                </span>
+                <span>{item.title}</span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Main Split-Screen Deck */}
       <div className="grid lg:grid-cols-12 min-h-[420px]">
-        {/* Left Column: The iPod Menu */}
-        <div className="border-b lg:border-b-0 lg:border-r border-line bg-canvas/40 p-4 sm:p-6 lg:col-span-5 flex flex-col justify-between">
+        {/* Left Column: The iPod Menu (Desktop) */}
+        <div className="hidden lg:flex lg:col-span-5 border-r border-line bg-canvas/40 p-6 flex-col justify-between">
           <div>
             <div className="mb-3 flex items-center justify-between px-2">
               <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-accent">
@@ -118,7 +169,7 @@ export default function CapabilitySlideDeck() {
           </div>
 
           {/* Progression Bar */}
-          <div className="mt-6 pt-4 border-t border-line/60 hidden lg:block">
+          <div className="mt-6 pt-4 border-t border-line/60">
             <div className="flex justify-between text-[11px] font-mono text-body mb-2">
               <span>DOMAIN COVERAGE</span>
               <span>{Math.round(((activeIndex + 1) / total) * 100)}%</span>
@@ -137,7 +188,7 @@ export default function CapabilitySlideDeck() {
           role="tabpanel"
           id="cap-tabpanel"
           aria-labelledby={`cap-tab-${activeIndex}`}
-          className="p-6 sm:p-8 lg:col-span-7 flex flex-col justify-between bg-surface/30"
+          className="col-span-12 lg:col-span-7 p-5 sm:p-8 flex flex-col justify-between bg-surface/30"
         >
           <div>
             {/* Slide Header */}

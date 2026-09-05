@@ -120,15 +120,3 @@ export const footer = {
   location: "Chennai & Hybrid Global Engineering Clusters",
   privacy: "Zero-tracking privacy commitment. No third-party analytics cookies by default.",
 };
-
-export const engagementTypes = [
-  { value: "turnkey", label: "Turnkey Product Development" },
-  { value: "squad", label: "Dedicated Engineering Squad" },
-  { value: "advisory", label: "Strategic Technology Advisory" },
-] as const;
-
-export const technicalDomains = [
-  { value: "erp-cloud", label: "Custom ERP / Cloud" },
-  { value: "pcb-iot", label: "PCB / Medical IoT" },
-  { value: "security-compliance", label: "Cyber Security / Compliance" },
-] as const;

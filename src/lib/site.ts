@@ -2,8 +2,6 @@ export const SECTIONS = ["hero", "about", "engagement", "capabilities", "contact
 
 export type SectionId = (typeof SECTIONS)[number];
 
-export const MOBILE_BREAKPOINT = 768;
-
 export const site = {
   name: "KRASIS",
   tagline: "Engineered by Systems Architects. Accelerated by AI.",
