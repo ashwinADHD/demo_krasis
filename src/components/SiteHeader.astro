@@ -24,36 +24,45 @@ import { site } from "@/lib/site";
     </a>
 
     <!-- Desktop Navigation Links -->
-    <nav class="hidden items-center gap-7 md:flex" aria-label="Main Navigation">
-      <a href="#top" class="text-sm font-medium text-body transition-colors hover:text-heading">
+    <nav class="hidden items-center gap-8 md:flex lg:gap-10" aria-label="Main Navigation">
+      <a
+        href="#top"
+        class="text-[15px] font-semibold text-body transition-colors hover:text-heading lg:text-base"
+      >
         Home
       </a>
-      <a href="#about" class="text-sm font-medium text-body transition-colors hover:text-heading">
+      <a
+        href="#about"
+        class="text-[15px] font-semibold text-body transition-colors hover:text-heading lg:text-base"
+      >
         About Us
       </a>
       <a
         href="#capabilities"
-        class="text-sm font-medium text-body transition-colors hover:text-heading"
+        class="text-[15px] font-semibold text-body transition-colors hover:text-heading lg:text-base"
       >
         Capabilities
       </a>
       <a
         href="#engagement"
-        class="text-sm font-medium text-body transition-colors hover:text-heading"
+        class="text-[15px] font-semibold text-body transition-colors hover:text-heading lg:text-base"
       >
         How We Work
       </a>
-      <a href="#contact" class="text-sm font-medium text-body transition-colors hover:text-heading">
+      <a
+        href="#contact"
+        class="text-[15px] font-semibold text-body transition-colors hover:text-heading lg:text-base"
+      >
         Contact Us
       </a>
     </nav>
 
     <!-- Header Actions -->
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-3.5">
       <ThemeToggle client:load />
       <a
         href="#contact"
-        class="btn-primary !px-4 !py-2 text-xs font-semibold sm:!px-5 sm:!py-2.5 sm:text-sm"
+        class="btn-primary !px-5 !py-2.5 text-sm font-semibold tracking-wide sm:!px-6"
       >
         Contact Us
       </a>
@@ -62,18 +71,14 @@ import { site } from "@/lib/site";
 
   <!-- Mobile Quick Nav Bar -->
   <div
-    class="border-line/60 flex items-center justify-center gap-4 border-t px-4 py-2 text-xs md:hidden"
+    class="border-line/60 flex items-center justify-center gap-5 border-t px-4 py-2.5 text-xs font-semibold sm:text-sm md:hidden"
   >
-    <a href="#top" class="font-medium text-body transition-colors hover:text-heading">Home</a>
+    <a href="#top" class="text-body transition-colors hover:text-heading">Home</a>
     <span class="text-line">•</span>
-    <a href="#about" class="font-medium text-body transition-colors hover:text-heading">About Us</a>
+    <a href="#about" class="text-body transition-colors hover:text-heading">About Us</a>
     <span class="text-line">•</span>
-    <a href="#capabilities" class="font-medium text-body transition-colors hover:text-heading"
-      >Capabilities</a
-    >
+    <a href="#capabilities" class="text-body transition-colors hover:text-heading">Capabilities</a>
     <span class="text-line">•</span>
-    <a href="#contact" class="font-medium text-body transition-colors hover:text-heading"
-      >Contact Us</a
-    >
+    <a href="#contact" class="text-body transition-colors hover:text-heading">Contact Us</a>
   </div>
 </header>
