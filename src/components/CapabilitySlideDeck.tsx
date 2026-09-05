@@ -1,0 +1,222 @@
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { capabilities } from "@/lib/content";
+
+const capabilityBadges: Record<number, string[]> = {
+  0: ["Multi-Region Failover", "Active-Active Cloud", "Real-Time Sync", "Custom ERP"],
+  1: ["IEC 62304 / ISO 13485", "Multi-Layer PCB", "RTOS BSPs", "Cryptographic OTA"],
+  2: ["Zero-Trust & mTLS", "Shift-Left SAST/DAST", "SBOM Pipelines", "Fuzzing Automation"],
+  3: ["SOC 2 Type II", "ISO 27001", "HIPAA & PCI-DSS", "Terraform / Helm Guardrails"],
+};
+
+export default function CapabilitySlideDeck() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const total = capabilities.length;
+  const currentCapability = capabilities[activeIndex];
+  const currentBadges = capabilityBadges[activeIndex] || [];
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % total);
+  }, [total]);
+
+  const handlePrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + total) % total);
+  }, [total]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!containerRef.current?.contains(document.activeElement)) return;
+      if (e.key === "ArrowDown" || e.key === "ArrowRight") {
+        e.preventDefault();
+        handleNext();
+      } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
+        e.preventDefault();
+        handlePrev();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleNext, handlePrev]);
+
+  return (
+    <div
+      ref={containerRef}
+      tabIndex={0}
+      className="group relative mt-12 overflow-hidden rounded-3xl border border-line bg-surface/60 shadow-2xl backdrop-blur-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-accent/40"
+      aria-label="Capabilities Interactive Presentation Deck"
+    >
+      {/* Top Status Bar (iPod OS Style) */}
+      <div className="flex items-center justify-between border-b border-line bg-surface/90 px-5 py-3 font-mono text-xs text-body">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-accent animate-pulse" />
+          <span className="font-semibold uppercase tracking-wider text-heading">
+            KRASIS OS // DOMAIN DECK
+          </span>
+        </div>
+        <div className="flex items-center gap-3">
+          <span className="rounded bg-canvas/80 px-2 py-0.5 font-semibold text-accent">
+            DOMAIN [ 0{activeIndex + 1} / 0{total} ]
+          </span>
+          <span className="hidden sm:inline text-[11px] text-body/80">
+            USE ARROW KEYS OR CLICK
+          </span>
+        </div>
+      </div>
+
+      {/* Main Split-Screen Deck */}
+      <div className="grid lg:grid-cols-12 min-h-[420px]">
+        {/* Left Column: The iPod Menu */}
+        <div className="border-b lg:border-b-0 lg:border-r border-line bg-canvas/40 p-4 sm:p-6 lg:col-span-5 flex flex-col justify-between">
+          <div>
+            <div className="mb-3 flex items-center justify-between px-2">
+              <span className="font-mono text-[11px] font-bold uppercase tracking-widest text-accent">
+                SELECT DOMAIN
+              </span>
+              <span className="font-mono text-[11px] text-body">{total} AREAS</span>
+            </div>
+
+            <div className="space-y-1.5" role="tablist" aria-orientation="vertical">
+              {capabilities.map((item, idx) => {
+                const isActive = idx === activeIndex;
+                return (
+                  <button
+                    key={item.title}
+                    id={`cap-tab-${idx}`}
+                    role="tab"
+                    aria-controls="cap-tabpanel"
+                    aria-selected={isActive}
+                    onClick={() => setActiveIndex(idx)}
+                    className={`w-full flex items-center justify-between rounded-xl px-4 py-3.5 text-left transition-all duration-200 ${
+                      isActive
+                        ? "bg-accent text-white shadow-md font-semibold"
+                        : "text-body hover:bg-surface-hover hover:text-heading"
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <span
+                        className={`font-mono text-xs ${
+                          isActive ? "text-white/90 font-bold" : "text-accent"
+                        }`}
+                      >
+                        0{idx + 1}
+                      </span>
+                      <span className="truncate text-sm sm:text-[15px]">{item.title}</span>
+                    </div>
+                    <span
+                      className={`font-mono text-base transition-transform duration-200 ${
+                        isActive ? "translate-x-0.5 text-white font-bold" : "text-body/60"
+                      }`}
+                    >
+                      ›
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Progression Bar */}
+          <div className="mt-6 pt-4 border-t border-line/60 hidden lg:block">
+            <div className="flex justify-between text-[11px] font-mono text-body mb-2">
+              <span>DOMAIN COVERAGE</span>
+              <span>{Math.round(((activeIndex + 1) / total) * 100)}%</span>
+            </div>
+            <div className="h-1.5 w-full rounded-full bg-line overflow-hidden">
+              <div
+                className="h-full bg-accent transition-all duration-300"
+                style={{ width: `${((activeIndex + 1) / total) * 100}%` }}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Right Column: The Presentation Slide */}
+        <div
+          role="tabpanel"
+          id="cap-tabpanel"
+          aria-labelledby={`cap-tab-${activeIndex}`}
+          className="p-6 sm:p-8 lg:col-span-7 flex flex-col justify-between bg-surface/30"
+        >
+          <div>
+            {/* Slide Header */}
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-2 border-b border-line/60 pb-4">
+              <div>
+                <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent">
+                  Technical Domain 0{activeIndex + 1}
+                </span>
+                <h3 className="mt-1 font-heading text-2xl sm:text-3xl font-bold tracking-tight text-heading">
+                  {currentCapability.title}
+                </h3>
+              </div>
+              <div className="flex items-center gap-1">
+                {capabilities.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setActiveIndex(idx)}
+                    aria-label={`Jump to Domain ${idx + 1}`}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === activeIndex ? "w-6 bg-accent" : "w-2 bg-line hover:bg-body"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Slide Body Description */}
+            <div className="rounded-2xl border border-line bg-canvas/50 p-5 sm:p-6 shadow-inner">
+              <p className="text-base leading-relaxed text-body sm:text-lg">
+                {currentCapability.body}
+              </p>
+            </div>
+
+            {/* Capability Standards & Verification Badges */}
+            <div className="mt-6">
+              <span className="font-mono text-xs font-semibold uppercase tracking-wider text-accent block mb-3">
+                Verified Verification & Standards:
+              </span>
+              <div className="flex flex-wrap gap-2.5">
+                {currentBadges.map((badge) => (
+                  <span
+                    key={badge}
+                    className="inline-flex items-center gap-1.5 rounded-xl border border-line bg-surface px-3.5 py-1.5 font-mono text-xs text-heading shadow-sm transition-all hover:border-accent"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                    {badge}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Deck Controls */}
+          <div className="mt-8 flex items-center justify-between border-t border-line/60 pt-4">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous Domain"
+                className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-4 py-2 text-xs font-semibold text-heading transition-all hover:border-accent hover:text-accent"
+              >
+                <span>‹</span>
+                <span>Prev</span>
+              </button>
+              <button
+                onClick={handleNext}
+                aria-label="Next Domain"
+                className="flex items-center gap-1.5 rounded-full border border-line bg-surface px-4 py-2 text-xs font-semibold text-heading transition-all hover:border-accent hover:text-accent"
+              >
+                <span>Next</span>
+                <span>›</span>
+              </button>
+            </div>
+
+            <span className="font-mono text-xs text-body">
+              Domain {activeIndex + 1} of {total}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

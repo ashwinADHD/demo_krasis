@@ -22,20 +22,20 @@
   }
 
   [data-theme="dark"] {
-    --color-canvas: #0b0d13;
-    --color-surface: #131823;
-    --color-surface-hover: #1c2333;
-    --color-line: #1e2638;
+    --color-canvas: #000000;
+    --color-surface: #0a0c10;
+    --color-surface-hover: #121620;
+    --color-line: #1c2230;
     --color-heading: #f8fafc;
     --color-body: #94a3b8;
     --color-accent: #f59e0b;
     --color-accent-hover: #d97706;
-    --color-hero-glow: rgba(124, 58, 237, 0.12);
+    --color-hero-glow: rgba(124, 58, 237, 0.15);
     --color-btn-bg: linear-gradient(135deg, #7c3aed 0%, #c026d3 100%);
     --color-btn-bg-hover: linear-gradient(135deg, #8b5cf6 0%, #d946ef 100%);
     --color-btn-text: #ffffff;
-    --color-nav-pill-bg: rgba(19, 24, 35, 0.9);
-    --color-nav-shadow: rgba(0, 0, 0, 0.4);
+    --color-nav-pill-bg: rgba(0, 0, 0, 0.85);
+    --color-nav-shadow: rgba(0, 0, 0, 0.6);
   }
 
   html {
