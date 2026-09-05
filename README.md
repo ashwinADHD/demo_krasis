@@ -1,29 +1,27 @@
-# KRASIS Demo — Astro
+# KRASIS — Systems Architecture & Engineering
 
-Modern stack demo for the KRASIS scroll prototype.
+Modern static marketing site and client intake portal for KRASIS.
 
 ## Tech
 
-| Layer | Choice |
-|-------|--------|
-| Framework | [Astro](https://astro.build) |
-| Language | TypeScript (strict) |
-| Styling | Tailwind CSS |
-| Interactivity | React islands (`client:load`) |
-| Icons | Lucide React |
-| Forms | Formspree (or swap to Resend API route) |
-| Analytics | Plausible or Cloudflare Web Analytics |
-| Deploy | Vercel or Cloudflare Pages |
-| Lint / format | ESLint + Prettier |
+| Layer         | Choice                                           |
+| ------------- | ------------------------------------------------ |
+| Framework     | [Astro](https://astro.build)                     |
+| Language      | TypeScript (strict)                              |
+| Styling       | Tailwind CSS                                     |
+| Interactivity | React islands (`client:load` / `client:visible`) |
+| Icons         | Lucide React                                     |
+| Forms         | Formspree (or swap to Resend API route)          |
+| Analytics     | Plausible or Cloudflare Web Analytics            |
+| Deploy        | Vercel or Cloudflare Pages                       |
+| Lint / format | ESLint + Prettier                                |
 
 ## React islands (interactive only)
 
 - `ThemeToggle` — light/dark mode
-- `ScrollNav` — section dots + horizontal wheel scroll
-- `ExploreButton` — scroll to contact
-- `ContactForm` — Formspree submission
+- `ContactForm` — Formspree submission (`client:visible`)
 
-Everything else is static Astro/HTML for performance.
+Everything else is static Astro/HTML for maximum performance.
 
 ## Setup
 
@@ -64,11 +62,11 @@ npm run format       # Prettier write
 
 ## Environment variables
 
-| Variable | Purpose |
-|----------|---------|
-| `PUBLIC_FORMSPREE_ENDPOINT` | Formspree form URL |
-| `PUBLIC_PLAUSIBLE_DOMAIN` | Plausible analytics domain |
-| `PUBLIC_CF_BEACON_TOKEN` | Cloudflare Web Analytics (optional) |
+| Variable                    | Purpose                             |
+| --------------------------- | ----------------------------------- |
+| `PUBLIC_FORMSPREE_ENDPOINT` | Formspree form URL                  |
+| `PUBLIC_PLAUSIBLE_DOMAIN`   | Plausible analytics domain          |
+| `PUBLIC_CF_BEACON_TOKEN`    | Cloudflare Web Analytics (optional) |
 
 ## Legacy prototype
 
