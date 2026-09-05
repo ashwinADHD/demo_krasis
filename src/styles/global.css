@@ -56,7 +56,7 @@
 
 @layer components {
   .brand-logo {
-    @apply aspect-[267/150] w-auto object-contain transition-[filter] duration-300;
+    @apply aspect-[1920/1080] w-auto object-contain transition-[filter] duration-300;
   }
 
   [data-theme="dark"] .nav-logo .brand-logo {
