@@ -114,6 +114,8 @@ export const contact = {
 };
 
 export const footer = {
+  phone: "+91 98846 15121",
+  phoneRaw: "+919884615121",
   engineeringEmail: "krasistech@gmail.com",
   location: "Chennai & Hybrid Global Engineering Clusters",
   privacy: "Zero-tracking privacy commitment. No third-party analytics cookies by default.",
